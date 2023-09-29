@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import List, Union
-from base_graph import BaseEdge, BaseGraph, BaseNode
+
+from algorithms.graph_lib.base_graph import BaseEdge, BaseGraph, BaseNode
 
 
 class UndirectedNode(BaseNode):
