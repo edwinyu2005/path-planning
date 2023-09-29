@@ -84,7 +84,7 @@ class UndirectedGraph(BaseGraph):
     """
     Represents an undirected graph.
 
-    The graph contains a collection of nodes (represented by unique IDs) 
+    The graph contains a collection of nodes (represented by unique IDs)
     and undirected edges. Each edge connects two nodes bidirectionally.
     """
     def __init__(self) -> None:
@@ -95,7 +95,7 @@ class UndirectedGraph(BaseGraph):
 
     def get_neighbors(self, node_id: Union[int, str]) -> List[UndirectedNode]:
         """
-        Get neighbors of a node in an undirected graph. 
+        Get neighbors of a node in an undirected graph.
         Neighbors here are nodes that share an edge with the given node.
         """
         node = self.get_node(node_id)

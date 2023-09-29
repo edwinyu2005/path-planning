@@ -76,9 +76,9 @@ class DirectedEdge(BaseEdge):
 
     def get_other_node(self, current_node: BaseNode) -> BaseNode:
         """
-        Given one of the nodes connected by this edge, return the other node. 
-        
-        Note: Due to the directed nature, if the provided node is the source, 
+        Given one of the nodes connected by this edge, return the other node.
+
+        Note: Due to the directed nature, if the provided node is the source,
         this will return the target and vice versa.
         """
         if current_node == self.source:
@@ -97,7 +97,7 @@ class DirectedGraph(BaseGraph):
     """
     Represents a directed graph.
 
-    The graph contains a collection of nodes (represented by unique IDs) 
+    The graph contains a collection of nodes (represented by unique IDs)
     and directed edges. Each edge has a source node and a target node.
     """
     def __init__(self) -> None:
@@ -108,7 +108,7 @@ class DirectedGraph(BaseGraph):
 
     def get_neighbors(self, node_id: Union[int, str]) -> List[DirectedNode]:
         """
-        Get neighbors of a node in a directed graph. 
+        Get neighbors of a node in a directed graph.
         """
         node = self.get_node(node_id)
         if not node:
