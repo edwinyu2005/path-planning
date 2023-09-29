@@ -19,6 +19,4 @@ if [ -f requirements.txt ]; then
     pip install -r requirements.txt
 fi
 
-echo "OK! good to go!"
-echo "Just run the following:"
-echo "source .venv/bin/activate"
+# echo "run 'source .venv/bin/activate' locally"
