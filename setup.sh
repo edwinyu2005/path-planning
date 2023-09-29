@@ -12,7 +12,7 @@ source .venv/bin/activate
 
 # Upgrade pip and install flake8
 pip install --upgrade pip
-pip install flake8
+pip install flake8 pytest
 
 # Install other dependencies from requirements.txt, if it exists
 if [ -f requirements.txt ]; then
