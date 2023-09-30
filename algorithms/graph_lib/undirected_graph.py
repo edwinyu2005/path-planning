@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Union
+from typing import List, Optional, Union
 
 from algorithms.graph_lib.base_graph import BaseEdge, BaseGraph, BaseNode
 
@@ -59,6 +59,10 @@ class UndirectedEdge(BaseEdge):
         node1.add_edge(self)
         node2.add_edge(self)
 
+    def __str__(self) -> str:
+        return "UndirectedEdge(ID: {}, Nodes: {}-{}, Weight: {})".format(
+            self.id, self.node1.id, self.node2.id, self.weight)
+
     def get_other_node(self, current_node: BaseNode) -> BaseNode:
         """
         Retrieve the other node connected by the edge.
@@ -76,9 +80,15 @@ class UndirectedEdge(BaseEdge):
         else:
             raise ValueError("Given node is not connected by this edge.")
 
-    def __str__(self) -> str:
-        return "UndirectedEdge(ID: {}, Nodes: {}-{}, Weight: {})".format(
-            self.id, self.node1.id, self.node2.id, self.weight)
+    def has_nodes(self, node1: BaseNode, node2: BaseNode) -> bool:
+        """
+        Check if the edge connects the specified nodes.
+
+        :param node1: First node.
+        :param node2: Second node.
+        :return: True if the edge connects the nodes, False otherwise.
+        """
+        return (self.node1 == node1 and self.node2 == node2) or (self.node1 == node2 and self.node2 == node1)
 
 
 class UndirectedGraph(BaseGraph):
@@ -109,3 +119,23 @@ class UndirectedGraph(BaseGraph):
         neighbors = [edge.node1 if edge.node2 == node else edge.node2 for edge in node.edges]
 
         return neighbors
+
+    def get_edge_between(self,
+                         node1: Union[int, str, BaseNode],
+                         node2: Union[int, str, BaseNode]) -> Optional[BaseEdge]:
+        """
+        Get the edge between two nodes by their IDs.
+
+        :param node1: first node or ID of the first node.
+        :param node2: second node or ID of the second node.
+        :return: The edge between the two nodes or None if no edge exists.
+        """
+        node_1 = node1 if isinstance(node1, BaseNode) else self.get_node(node1)
+        node_2 = node2 if isinstance(node2, BaseNode) else self.get_node(node2)
+
+        if node_1 and node_2:
+            for edge in self.edges.values():
+                if edge.has_nodes(node_1, node_2):
+                    return edge
+
+        return None

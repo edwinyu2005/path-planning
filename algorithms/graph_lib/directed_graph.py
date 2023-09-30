@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Union
+from typing import List, Optional, Union
 
 from algorithms.graph_lib.base_graph import BaseEdge, BaseGraph, BaseNode
 
@@ -69,6 +69,10 @@ class DirectedEdge(BaseEdge):
         source.add_outgoing_edge(self)
         target.add_incoming_edge(self)
 
+    def __str__(self) -> str:
+        return "Directed Edge(ID: {}, Nodes: {}->{}, Weight: {})".format(
+            self.id, self.source.id, self.target.id, self.weight)
+
     def is_source(self, node: BaseNode) -> bool:
         return node == self.source
 
@@ -89,9 +93,15 @@ class DirectedEdge(BaseEdge):
         else:
             raise ValueError("Given node is not connected by this edge.")
 
-    def __str__(self) -> str:
-        return "Directed Edge(ID: {}, Nodes: {}->{}, Weight: {})".format(
-            self.id, self.source.id, self.target.id, self.weight)
+    def has_nodes(self, node1: BaseNode, node2: BaseNode) -> bool:
+        """
+        Check if the edge connects the specified nodes.
+
+        :param node1: Source node.
+        :param node2: Target node.
+        :return: True if the edge connects the nodes, False otherwise.
+        """
+        return self.source == node1 and self.target == node2
 
 
 class DirectedGraph(BaseGraph):
@@ -118,3 +128,23 @@ class DirectedGraph(BaseGraph):
             raise ValueError("The provided node ID does not correspond to a DirectedNode instance.")
 
         return node.get_successors()
+
+    def get_edge_between(self,
+                         node1: Union[int, str, BaseNode],
+                         node2: Union[int, str, BaseNode]) -> Optional[BaseEdge]:
+        """
+        Get the edge between two nodes by their IDs.
+
+        :param node1: source node or ID of the source node.
+        :param node2: target node or ID of the target node.
+        :return: The edge between the two nodes or None if no edge exists.
+        """
+        source_node = node1 if isinstance(node1, BaseNode) else self.get_node(node1)
+        target_node = node2 if isinstance(node2, BaseNode) else self.get_node(node2)
+
+        if source_node and target_node:
+            for edge in self.edges.values():
+                if edge.source == source_node and edge.target == target_node:
+                    return edge
+
+        return None
