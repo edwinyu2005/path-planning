@@ -2,6 +2,7 @@ import pytest
 
 from algorithms.graph_lib.directed_graph import DirectedEdge, DirectedGraph, DirectedNode
 
+
 class TestDirectedGraph:
     @pytest.fixture
     def directed_graph(self):
