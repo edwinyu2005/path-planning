@@ -109,7 +109,7 @@ class DirectedGraph(BaseGraph):
 
     def get_neighbors(self, node_id: Union[int, str]) -> List[DirectedNode]:
         """
-        Get neighbors of a node in a directed graph.
+        Get successor neighbors of a node in a directed graph.
         """
         node = self.get_node(node_id)
         if not node:
@@ -117,7 +117,4 @@ class DirectedGraph(BaseGraph):
         if not isinstance(node, DirectedNode):
             raise ValueError("The provided node ID does not correspond to a DirectedNode instance.")
 
-        neighbors = node.get_successors() + node.get_predecessors()
-        unique_neighbors = list(set(neighbors))
-
-        return unique_neighbors
+        return node.get_successors()
