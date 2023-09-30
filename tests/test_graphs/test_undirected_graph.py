@@ -2,6 +2,7 @@ import pytest
 
 from algorithms.graph_lib.undirected_graph import UndirectedEdge, UndirectedGraph, UndirectedNode
 
+
 class TestUndirectedGraph:
     @pytest.fixture
     def undirected_graph(self):
@@ -21,11 +22,11 @@ class TestUndirectedGraph:
         node_a = UndirectedNode("A")
         node_b = UndirectedNode("B")
         edge_ab = UndirectedEdge("edge_ab", node_a, node_b)
-        
+
         undirected_graph.add_node(node_a)
         undirected_graph.add_node(node_b)
         undirected_graph.add_edge(edge_ab)
-        
+
         assert len(undirected_graph.edges) == 1
         assert len(node_a.edges) == 1
         assert len(node_b.edges) == 1
