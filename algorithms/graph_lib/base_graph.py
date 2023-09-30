@@ -15,6 +15,20 @@ class BaseNode:
     def __str__(self) -> str:
         return str(self.id)
 
+    def __eq__(self, other: BaseNode) -> bool:
+        """
+        Check if two nodes are the same based on their IDs.
+
+        :param other: Another node object.
+        :return: True if the nodes have the same ID, False otherwise.
+        """
+        if isinstance(other, BaseNode):
+            return self.id == other.id
+        return False
+
+    def __hash__(self):
+        return hash(self.id)
+
 
 class BaseEdge:
     """
@@ -30,6 +44,12 @@ class BaseEdge:
 
     def __str__(self) -> str:
         return "Edge(ID: {}, Weight: {})".format(self.id, self.weight)
+
+    def has_nodes(self, node1: BaseNode, node2: BaseNode) -> bool:
+        """
+        Check if the edge connects the specified nodes.
+        """
+        raise NotImplementedError
 
 
 class BaseGraph:
@@ -73,4 +93,9 @@ class BaseGraph:
 
     def get_neighbors(self, node_id: Union[int, str]) -> List[BaseNode]:
         """Abstract method to be implemented by subclasses to get neighbors of a node."""
+        raise NotImplementedError
+
+    def get_edge_between(self,
+                         node1: Union[int, str, BaseNode],
+                         node2: Union[int, str, BaseNode]) -> Optional[BaseEdge]:
         raise NotImplementedError
