@@ -51,5 +51,5 @@ class TestDirectedGraph:
 
         assert set(node_a.outgoing_edges) == {edge_ab, edge_ac}
         assert set(neighbors_a) == {node_b, node_c}
-        assert set(neighbors_b) == {node_a, node_c}
-        assert set(neighbors_c) == {node_a, node_b}
+        assert set(neighbors_b) == {node_c}
+        assert len(neighbors_c) == 0
