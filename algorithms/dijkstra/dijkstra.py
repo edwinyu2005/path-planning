@@ -37,11 +37,13 @@ class Dijkstra:
             unvisited_nodes.remove(current_node_id)
 
             for neighbor_node in self.graph.get_neighbors(current_node_id):
+                # TODO: Refactor get_edge_between to achieve a time complexity of O(1)
                 edge = self.graph.get_edge_between(current_node_id, neighbor_node)
                 potential_distance = distances[current_node_id] + edge.weight
                 if potential_distance < distances[neighbor_node.id]:
                     distances[neighbor_node.id] = potential_distance
                     predecessors[neighbor_node.id] = current_node_id
+                    # TODO: Develop a custom priority_queue that allows for updating the priority of its existing items.
                     heapq.heappush(priority_queue, (potential_distance, neighbor_node.id))
 
         shortest_paths = {
