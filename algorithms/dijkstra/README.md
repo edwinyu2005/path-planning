@@ -23,6 +23,7 @@ The graph is encapsulated using three primary classes:
 
 Note: While a graph can be classified as [directed](../graph_lib/directed_graph.py) or [undirected](../graph_lib/undirected_graph.py), it's worth mentioning that an undirected graph is essentially a specific type of directed graph.
 
+![Example](./dijkstra.png)
 
 ## Usage
 To employ Dijkstra algorithm:
