@@ -9,8 +9,10 @@ class BaseNode:
     Attributes:
     - id (Union[int, str]): A unique identifier for the node.
     """
-    def __init__(self, id: Union[int, str]):
+    def __init__(self, id: Union[int, str], x: Optional[float] = None, y: Optional[float] = None):
         self.id = id
+        self.x = x
+        self.y = y
 
     def __str__(self) -> str:
         return str(self.id)

@@ -12,8 +12,8 @@ class UndirectedNode(BaseNode):
     - id (Union[int, str]): A unique identifier for the node.
     - edges (List[UndirectedEdge]): A list of edges associated with the node.
     """
-    def __init__(self, id: Union[int, str]):
-        super().__init__(id)
+    def __init__(self, id: Union[int, str], x: Optional[float] = None, y: Optional[float] = None):
+        super().__init__(id, x, y)
         self.edges = []
 
     def add_edge(self, edge: UndirectedEdge) -> None:

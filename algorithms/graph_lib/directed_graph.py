@@ -13,8 +13,8 @@ class DirectedNode(BaseNode):
     - outgoing_edges (List[DirectedEdge]): A list of outgoing edges from the node.
     - incoming_edges (List[DirectedEdge]): A list of incoming edges to the node.
     """
-    def __init__(self, id: Union[int, str]):
-        super().__init__(id)
+    def __init__(self, id: Union[int, str], x: Optional[float] = None, y: Optional[float] = None):
+        super().__init__(id, x, y)
         self.outgoing_edges = []
         self.incoming_edges = []
 
