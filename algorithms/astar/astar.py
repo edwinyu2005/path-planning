@@ -4,8 +4,11 @@ from enum import Enum
 from typing import List, Dict, Optional, Union
 import heapq
 import math
+import matplotlib.pyplot as plt
+import networkx as nx
 
 from algorithms.graph_lib.base_graph import BaseGraph, BaseNode
+from algorithms.graph_lib.directed_graph import DirectedEdge, DirectedGraph
 
 
 class HeuristicType(Enum):
@@ -140,3 +143,40 @@ class AStar:
             current = predecessors[current]
         path.append(self.start.id)
         return path[::-1]
+
+    def render(self, path: Optional[Union[List[int], List[str]]]):
+        """
+        Renders the graph using networkx and matplotlib, highlighting the best path found by A*.
+
+        Parameters:
+        - path: The path found by A*, as a list of node IDs.
+        """
+        # Convert the graph to a networkx graph
+        G = nx.DiGraph() if isinstance(self.graph, DirectedGraph) else nx.Graph()
+
+        for node in self.graph.nodes.values():
+            G.add_node(node.id, pos=(node.x, node.y))
+
+        for edge in self.graph.edges.values():
+            # TODO: improve edge API
+            if isinstance(edge, DirectedEdge):
+                start_node = edge.source
+                end_node = edge.target
+            else:
+                start_node = edge.node1
+                end_node = edge.node2
+            G.add_edge(start_node.id, end_node.id, weight=edge.weight)
+
+        # Extract positions
+        pos = nx.get_node_attributes(G, 'pos')
+
+        # Draw the graph
+        nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue')
+
+        # Highlight the path, if provided
+        if path:
+            path_edges = [(path[i], path[i + 1]) for i in range(len(path) - 1)]
+            nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='r')
+            nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='r', width=2)
+
+        plt.show()

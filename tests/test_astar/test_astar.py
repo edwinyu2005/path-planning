@@ -28,6 +28,7 @@ class TestAStarAlgorithm:
     def test_astar_search_valid_path(self):
         astar = AStar(self.directed_graph, heuristic_type=HeuristicType.MANHATTAN)
         path = astar.find_shortest_path(1, 4)
+        # astar.render(path)
         assert path == [1, 2, 3, 4]
 
     def test_astar_search_no_path(self):
