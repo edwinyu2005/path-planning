@@ -29,8 +29,8 @@ class AStar:
     - graph (Graph): An instance of the Graph class that represents the problem to be solved.
     - heuristic_type (HeuristicType): The heuristic function type used to estimate the distance
     from a node to the goal.
-    - predecessors (dict): Dictionary to map from a node to its predecessor for reconstructing
-    the shortest path for the most recent search.
+    - predecessors (dict): Dictionary to map from a node id to its predecessor id for
+    reconstructing the shortest path for the most recent search.
     """
     def __init__(self,
                  graph: BaseGraph,
@@ -91,7 +91,7 @@ class AStar:
         closed_list = set() # Set of nodes that have already been explored
         # g_costs: Dictionary that maps nodes to their g_cost, which is the actual distance
         # from the start node
-        g_costs = {node.id: float('inf') for node in self.graph.nodes}
+        g_costs = {node_id: float('inf') for node_id in self.graph.nodes.keys()}
         g_costs[self.start.id] = 0.0
         # Reset predecessors for this search
         self.predecessors = {}
@@ -109,7 +109,7 @@ class AStar:
             for neighbor_node in self.graph.get_neighbors(current_node_id):
                 if neighbor_node.id in closed_list:
                     continue
-                edge = self.graph.get_edge_between(current_node_id, neighbor_node)
+                edge = self.graph.get_edge_between(current_node_id, neighbor_node.id)
                 tentative_g_cost = g_costs[current_node_id] + edge.weight
                 if tentative_g_cost < g_costs[neighbor_node.id]:
                     g_costs[neighbor_node.id] = tentative_g_cost
@@ -120,7 +120,7 @@ class AStar:
         return None
 
     def reconstruct_path(self,
-                         predecessors: Dict[BaseNode, BaseNode]) -> Optional[Union[List[int], List[str]]]:
+                         predecessors: Union[Dict[int, int], Dict[str, str]]) -> Optional[Union[List[int], List[str]]]:
         """
         Reconstruct the path from the goal to the start using the predecessors.
 
@@ -134,9 +134,9 @@ class AStar:
             print("Predecessors dict is empty! Please rerun the algorithm.")
             return None
         path = []
-        current = self.goal
+        current = self.goal.id
         while current in predecessors:
-            path.append(current.id)
+            path.append(current)
             current = predecessors[current]
         path.append(self.start.id)
         return path[::-1]
